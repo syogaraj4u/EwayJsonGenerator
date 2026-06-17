@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bill List Batch Generator</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="shell">
+        <section class="panel controls">
+          <div class="heading">
+            <p class="eyebrow">Batch upload</p>
+            <h1>Generate billLists from invoice PDFs, scans, or JSON</h1>
+          </div>
+
+          <label class="drop-zone" for="invoiceInput">
+            <input id="invoiceInput" type="file" accept="application/pdf,.pdf,image/png,image/jpeg,image/tiff,image/bmp,image/webp,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,application/json,.json" multiple />
+            <span class="drop-icon">OCR</span>
+            <strong>Select invoices or JSON</strong>
+            <small>Drag and drop PDF invoices, scanned image files, or a billLists JSON file here.</small>
+          </label>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Shop Name</span>
+              <select id="shopName">
+                <option value="">Loading shops...</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Trans Type</span>
+              <select id="transType">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Vehicle No</span>
+              <input id="vehicleNo" type="text" placeholder="AP03AU2457" maxlength="15" autocomplete="off" spellcheck="false" />
+            </label>
+          </div>
+
+          <div id="addressPicker" class="address-picker hidden">
+            <div class="section-title">Select delivery address</div>
+            <label class="address-option">
+              <input type="radio" name="addressChoice" value="0" checked />
+              <span>
+                <strong>1</strong>
+                <small>21-10-518/A Kranthi nagar, Jeevakona, Tirupati, 517507</small>
+              </span>
+            </label>
+            <label class="address-option">
+              <input type="radio" name="addressChoice" value="1" />
+              <span>
+                <strong>2</strong>
+                <small>SNR Heights, Thiminadirupalem Rd, Tirupati, 517507</small>
+              </span>
+            </label>
+            <label class="address-option">
+              <input type="radio" name="addressChoice" value="2" />
+              <span>
+                <strong>3</strong>
+                <small>22-8-97/2, Upadyay Nagar 11th Cross, Tirupati, 517507</small>
+              </span>
+            </label>
+            <label class="address-option">
+              <input type="radio" name="addressChoice" value="3" />
+              <span>
+                <strong>4</strong>
+                <small>no 5/3 grace garden 4th lane, Royappuram, Chennai, 600021</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="generateBtn" disabled>Generate billLists</button>
+            <button id="clearBtn" type="button" class="secondary">Clear</button>
+          </div>
+
+          <div class="status" id="status">Waiting for invoices.</div>
+
+          <div id="validationReport" class="validation-report hidden">
+            <div class="section-title">Validation report</div>
+            <ul id="validationList" class="validation-list"></ul>
+          </div>
+
+          <div class="file-list-wrap">
+            <div class="section-title">Selected files</div>
+            <ul id="fileList" class="file-list"></ul>
+          </div>
+
+          <div class="history-panel">
+            <div class="history-head">
+              <div class="section-title">Upload history</div>
+              <button id="clearHistoryBtn" type="button" class="secondary">Clear history</button>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </div>
+        </section>
+
+        <section class="panel output">
+          <div class="output-bar">
+            <div>
+              <div class="section-title">Generated JSON</div>
+              <div id="summary" class="muted">No output yet.</div>
+            </div>
+            <div class="toolbar-actions">
+              <button id="copyBtn" class="icon-button" disabled>Copy</button>
+              <button id="exportExcelBtn" class="icon-button" disabled>Excel</button>
+              <button id="downloadBtn" class="icon-button" disabled>Download</button>
+            </div>
+          </div>
+          <div id="batchSummary" class="batch-summary"></div>
+          <div id="batchWarnings" class="batch-warnings hidden"></div>
+          <pre id="output">{}</pre>
+        </section>
+      </section>
+
+      <section id="reviewWorkspace" class="review-workspace hidden">
+        <div class="workspace-head">
+          <div>
+            <div class="section-title">Review and edit</div>
+            <div id="reviewSummary" class="muted">No extracted bills yet.</div>
+            <div id="reviewAlerts" class="review-alerts"></div>
+          </div>
+        </div>
+        <div id="reviewBills" class="review-bills"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
